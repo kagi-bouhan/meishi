@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>まるっと名刺</title>
+<link rel="manifest" href="u2.webmanifest">
+<meta name="theme-color" content="#159BEA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="まるっと名刺">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+  :root { --blue:#159BEA; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { margin:0; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:24px;
+    font-family:-apple-system,"Segoe UI","Hiragino Kaku Gothic ProN","メイリオ",sans-serif; background:#ffffff; color:#202124; text-align:center; }
+  img.app { width:120px; height:120px; border-radius:26px; box-shadow:0 6px 20px rgba(0,0,0,.12); }
+  h1 { font-size:20px; margin:4px 0 0; }
+  p { font-size:14px; color:#5f6368; margin:0; line-height:1.7; }
+  .btn { display:inline-block; margin-top:8px; padding:14px 26px; border-radius:12px; background:var(--blue); color:#fff; font-weight:700; font-size:16px; text-decoration:none; border:none; }
+  .hint { font-size:13px; color:#5f6368; max-width:320px; }
+  .spinner { width:22px; height:22px; border:3px solid #dfe3e8; border-top-color:var(--blue); border-radius:50%; animation:spin .8s linear infinite; display:none; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .row { display:flex; align-items:center; gap:10px; }
+</style>
+</head>
+<body>
+  <img class="app" src="icon-512.png" alt="まるっと名刺">
+  <h1>まるっと名刺</h1>
+  <div id="open-area"><a id="openBtn" class="btn" href="#">アプリを開く</a></div>
+  <div class="row"><span id="sp" class="spinner"></span><span id="msg" class="hint"></span></div>
+  <p class="hint" id="addHint" style="display:none;">ホーム画面に追加するには<br>Safariの共有ボタン → 「ホーム画面に追加」</p>
+<script>
+(function () {
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbyPDoUUzu2JG8vxb4xjQn3lZ92M_KQzBpGNFnfzRrD3f6NB5Y_Dwlha_jHrqynHUXrP/exec";
+  var TOKEN = "43b36004ae";            // 各自のトークンを直接埋め込み（URL頼みにしない）
+  var target = GAS_URL + "?u=" + encodeURIComponent(TOKEN);
+  document.getElementById("openBtn").setAttribute("href", target);
+  var standalone = (window.navigator.standalone === true) ||
+    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+  if (standalone) {
+    document.getElementById("open-area").style.display = "none";
+    document.getElementById("sp").style.display = "inline-block";
+    document.getElementById("msg").textContent = "開いています…";
+    setTimeout(function () { location.replace(target); }, 400);
+  } else {
+    document.getElementById("addHint").style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>

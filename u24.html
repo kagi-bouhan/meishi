@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>まるっと名刺</title>
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="u24.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="まるっと名刺">
+<meta name="theme-color" content="#ffffff">
+<style>
+  html,body{margin:0;height:100%;font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;background:#f7f7f8;color:#222}
+  .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;box-sizing:border-box;text-align:center}
+  img.icon{width:96px;height:96px;border-radius:22px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+  h1{font-size:20px;margin:0}
+  a.btn{display:inline-block;background:#1a73e8;color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:17px;font-weight:600}
+  p.hint{font-size:13px;color:#666;max-width:320px;line-height:1.6;margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="icon" src="icon-180.png" alt="まるっと名刺">
+  <h1>まるっと名刺</h1>
+  <a id="open" class="btn" href="#">アプリを開く</a>
+  <p class="hint">ホーム画面に追加してから、このアイコンで起動できます。<br>iPhone: 共有ボタン →「ホーム画面に追加」<br>Android: メニュー(⋮) →「ホーム画面に追加」</p>
+</div>
+<script>
+  var TOKEN = "1a1904be07";
+  var APP = "https://script.google.com/macros/s/AKfycbyPDoUUzu2JG8vxb4xjQn3lZ92M_KQzBpGNFnfzRrD3f6NB5Y_Dwlha_jHrqynHUXrP/exec?u=" + TOKEN;
+  document.getElementById("open").href = APP;
+  // ホーム画面(スタンドアロン)起動時は自動でアプリを開く
+  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
+    location.replace(APP);
+  }
+</script>
+</body>
+</html>

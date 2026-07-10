@@ -15,29 +15,51 @@
 
 <!-- ホーム画面に追加したときのアイコン（キーのロゴ・同フォルダ） -->
 <link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 
 <style>
   html,body{margin:0;height:100%;font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#fff;color:#333}
-  .wrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;box-sizing:border-box;text-align:center}
-  .logo{width:96px;height:96px}
-  .msg{font-size:15px;color:#666}
-  .btn{margin-top:6px;display:inline-block;padding:12px 22px;border-radius:10px;background:#1565ff;color:#fff;text-decoration:none;font-weight:600}
+  .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:28px;box-sizing:border-box;text-align:center}
+  .logo{width:112px;height:112px}
+  .ttl{font-size:20px;font-weight:700;margin:2px 0}
+  .msg{font-size:14px;color:#666;line-height:1.7;max-width:320px}
+  .btn{margin-top:8px;display:inline-block;padding:14px 26px;border-radius:12px;background:#1565ff;color:#fff;text-decoration:none;font-weight:700;font-size:16px}
+  .hint{margin-top:14px;font-size:12px;color:#999;line-height:1.7;max-width:320px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <img class="logo" src="icon-192.png" alt="まるっとアイル">
-  <div class="msg">まるっとアイルを開いています…</div>
-  <a class="btn" id="open" href="#">開かないときはこちら</a>
+  <div class="ttl">まるっとアイル</div>
+  <div class="msg" id="msg">読み込み中…</div>
+  <a class="btn" id="open" href="#">まるっとアイルを開く</a>
+  <div class="hint" id="hint"></div>
 </div>
 
 <script>
   // まるっとアイル（AppSheet）アプリ本体URL
   var APP_URL = "https://www.appsheet.com/start/a0b249fc-5dad-4888-a495-deab992bb325";
   document.getElementById("open").href = APP_URL;
-  location.replace(APP_URL);
+
+  // ホーム画面アイコンから起動されたか（スタンドアロン表示か）を判定
+  var standalone =
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+    window.navigator.standalone === true;
+
+  if (standalone) {
+    // ホーム画面のアイコンから起動 → そのままアプリへ
+    document.getElementById("msg").textContent = "まるっとアイルを開いています…";
+    document.getElementById("hint").textContent = "";
+    location.replace(APP_URL);
+  } else {
+    // 通常のブラウザで開いた場合 → 自動遷移せず、追加できるように留まる
+    document.getElementById("msg").textContent =
+      "このページをホーム画面に追加すると、このアイコンでまるっとアイルを開けます。";
+    document.getElementById("hint").innerHTML =
+      "追加方法：iPhoneは共有ボタン→「ホーム画面に追加」／ Androidはメニュー(⋮)→「ホーム画面に追加」。<br>今すぐ開くには上のボタンを押してください。";
+  }
 </script>
 </body>
 </html>
